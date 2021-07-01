@@ -17,15 +17,25 @@ class AlienInvasion:
         """Starts the main loop for the game"""
         running = True
         while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-            
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
+            running = self._check_events()
+            self._update_screen()
 
-            # Show the recently drawn screen
-            pygame.display.flip()
+    def _check_events(self):
+        """Return whether the loop running it should continue
+        returns False to stop the loop else return False"""
+        events_list = pygame.event.get()
+        if events_list == []:
+            return True
+        for event in events_list:
+            if event.type == pygame.QUIT:
+                return False
+        return True
+
+    def _update_screen(self):
+        """Makes new screen and flip to the new screen"""
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+        pygame.display.flip()
 
 if __name__ == '__main__':
     ai = AlienInvasion()
