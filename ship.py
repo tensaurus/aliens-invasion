@@ -8,7 +8,11 @@ class Ship:
         self.screen_rect = ai_game.screen.get_rect()
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
+        self.settings = ai_game.settings
         self.rect.midbottom = self.screen_rect.midbottom
+
+        # Store ship's horizontal position in decimal values
+        self.x = float(self.rect.x)
 
         # Movement flags
         self.moving_right = False
@@ -20,6 +24,8 @@ class Ship:
 
     def update_position(self):
         if self.moving_right:
-            self.rect.x += 1
+            self.x += self.settings.ship_speed
         if self.moving_left:
-            self.rect.x -= 1
+            self.x -= self.settings.ship_speed
+        # Update rect object from self.x
+        self.rect.x = self.x
