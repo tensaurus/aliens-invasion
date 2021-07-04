@@ -27,14 +27,7 @@ class AlienInvasion:
         while running:
             running = self._check_events()
             self.ship.update_position()
-            
-            for bullet in copy.copy(self.bullets):
-                # Remove bullets from the list which crosses the screen
-                if bullet.rect.y <= 0:
-                    self.bullets.remove(bullet)
-                else:
-                    bullet.update_position()
-            
+            self._update_bullets()
             self._update_screen()
             
     def _check_events(self):
@@ -85,8 +78,13 @@ class AlienInvasion:
             self.bullets.append(Bullet(self))
 
     def _update_bullets(self):
-        """"""
-        pass
+        """Manage bullets: remove old and update remaining bullets"""
+        for bullet in copy.copy(self.bullets):
+            # Remove bullets from the list which crosses the screen
+            if bullet.rect.y <= 0:
+                self.bullets.remove(bullet)
+            else: # Update bullets' position
+                bullet.update_position()
 
 
 if __name__ == '__main__':
