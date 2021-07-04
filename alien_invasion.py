@@ -80,11 +80,13 @@ class AlienInvasion:
         pygame.display.flip()
 
     def _fire_bullet(self):
-        # Create a bullet
-        self.bullets.append(Bullet(self))
+        # Create a bullet and to the bullets list
+        if len(self.bullets) < self.settings.numer_of_bullets_allowed:
+            self.bullets.append(Bullet(self))
 
     def _update_bullets(self):
-        """Call given method on all items of bullets list"""
+        """"""
+        pass
 
 
 if __name__ == '__main__':
