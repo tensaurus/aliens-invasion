@@ -94,8 +94,15 @@ class AlienInvasion:
 
     def _create_alien_fleet(self):
         """Create all the aliens in the fleet"""
-        # Make a new alien and add to the fleet
-        self.aliens.append(Alien(self))
+        # Make one alien for width calculation
+        alien = Alien(self)
+        alien_width = alien.rect.width
+        # Make alien fleet
+        number_of_aliens_x = (self.settings.screen_width - alien_width) // (2 * alien_width)
+        for alien_number in range(number_of_aliens_x):
+            alien = Alien(self)
+            alien.rect.x = alien_width + (2 * alien_width) * alien_number
+            self.aliens.append(alien)
 
 
 if __name__ == '__main__':
