@@ -1,6 +1,12 @@
+import sys
+import copy
+
 import pygame
+
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
+
 class AlienInvasion:
     """Manage game assets and behavior."""
 
@@ -8,10 +14,12 @@ class AlienInvasion:
         """Initialize game and create game resources"""
         pygame.init()
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((self.settings.screen_width,
-                                               self.settings.screen_height))
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
+        self.bullets = []
 
     def run_game(self):
         """Starts the main loop for the game"""
@@ -19,6 +27,14 @@ class AlienInvasion:
         while running:
             running = self._check_events()
             self.ship.update_position()
+            
+            for bullet in copy.copy(self.bullets):
+                # Remove bullets from the list which crosses the screen
+                if bullet.rect.y <= 0:
+                    self.bullets.remove(bullet)
+                else:
+                    bullet.update_position()
+            
             self._update_screen()
             
     def _check_events(self):
@@ -43,6 +59,10 @@ class AlienInvasion:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
+        elif event.key == pygame.K_q:
+            sys.exit()
 
     def _check_keyup_events(self, event):
         """Handle all keyup events"""
@@ -55,7 +75,17 @@ class AlienInvasion:
         """Makes new screen and flip to the new screen"""
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
+        for bullet in self.bullets:
+            bullet.draw_bullet()
         pygame.display.flip()
+
+    def _fire_bullet(self):
+        # Create a bullet
+        self.bullets.append(Bullet(self))
+
+    def _update_bullets(self):
+        """Call given method on all items of bullets list"""
+
 
 if __name__ == '__main__':
     ai = AlienInvasion()
