@@ -19,7 +19,15 @@ class Alien():
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
-    def update(self):
+    def update_horizontal_position(self):
         """Move the alien to the right"""
-        self.x += self.settings.alien_speed
+        self.x += self.settings.alien_speed * self.settings.fleet_direction
         self.rect.x = self.x
+
+    def update_vertical_position(self):
+        self.rect.y += self.settings.fleet_drop_speed
+
+    def is_at_edge(self):
+        """Returns true if alien is at the edge of the screen"""
+        screen_rect = self.screen.get_rect()
+        return self.rect.right >= screen_rect.right or self.rect.x <= 0

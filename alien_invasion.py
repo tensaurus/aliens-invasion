@@ -94,10 +94,23 @@ class AlienInvasion:
                 bullet.update_position()
 
     def _update_aliens(self):
-        """Update the position of all aliens in the fleet"""
+        """Check if fleet is at the edge, change direction and
+        then update the position of all aliens in the fleet"""
+        if self._is_fleet_at_edge():
+            # Change fleet direction
+            self.settings.fleet_direction *= -1
+            # Drop fleet by one step
+            for alien in self.aliens:
+                alien.update_vertical_position()
         for alien in self.aliens:
-            alien.update()
+            alien.update_horizontal_position()
 
+    def _is_fleet_at_edge(self):
+        """Returns true if fleet reaches any edge of the screen"""
+        for alien in self.aliens:
+            if alien.is_at_edge():
+                return True
+    
     def _create_alien_fleet(self):
         """Create all the aliens in the fleet"""
         # Make one alien for width calculation
@@ -117,7 +130,6 @@ class AlienInvasion:
                 alien.rect.x = alien.x
                 alien.rect.y = alien_height + (2 * alien_height) * row_number
                 self.aliens.append(alien)
-
 
 if __name__ == '__main__':
     ai = AlienInvasion()
