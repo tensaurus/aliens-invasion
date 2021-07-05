@@ -32,6 +32,7 @@ class AlienInvasion:
             running = self._check_events()
             self.ship.update_position()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
             
     def _check_events(self):
@@ -92,6 +93,11 @@ class AlienInvasion:
             else: # Update bullets' position
                 bullet.update_position()
 
+    def _update_aliens(self):
+        """Update the position of all aliens in the fleet"""
+        for alien in self.aliens:
+            alien.update()
+
     def _create_alien_fleet(self):
         """Create all the aliens in the fleet"""
         # Make one alien for width calculation
@@ -107,7 +113,8 @@ class AlienInvasion:
         for row_number in range(number_of_rows):
             for alien_number in range(number_of_aliens_per_row):
                 alien = Alien(self)
-                alien.rect.x = alien_width + (2 * alien_width) * alien_number
+                alien.x = alien_width + (2 * alien_width) * alien_number
+                alien.rect.x = alien.x
                 alien.rect.y = alien_height + (2 * alien_height) * row_number
                 self.aliens.append(alien)
 
