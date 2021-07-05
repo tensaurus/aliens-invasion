@@ -96,13 +96,20 @@ class AlienInvasion:
         """Create all the aliens in the fleet"""
         # Make one alien for width calculation
         alien = Alien(self)
-        alien_width = alien.rect.width
+        alien_width, alien_height = alien.rect.size
+        ship_height = self.ship.rect.height
+        available_horizontal_space = self.settings.screen_width - (2 * alien_width)
+        available_vertical_space = (self.settings.screen_height - 
+                                        (3 * alien_height) - ship_height)
+        number_of_aliens_per_row = available_horizontal_space // (2 * alien_width)
+        number_of_rows = available_vertical_space // (2 * alien_height)
         # Make alien fleet
-        number_of_aliens_x = (self.settings.screen_width - alien_width) // (2 * alien_width)
-        for alien_number in range(number_of_aliens_x):
-            alien = Alien(self)
-            alien.rect.x = alien_width + (2 * alien_width) * alien_number
-            self.aliens.append(alien)
+        for row_number in range(number_of_rows):
+            for alien_number in range(number_of_aliens_per_row):
+                alien = Alien(self)
+                alien.rect.x = alien_width + (2 * alien_width) * alien_number
+                alien.rect.y = alien_height + (2 * alien_height) * row_number
+                self.aliens.append(alien)
 
 
 if __name__ == '__main__':
