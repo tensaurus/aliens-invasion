@@ -20,7 +20,7 @@ class AlienInvasion:
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
-        self.bullets = []
+        self.bullets = pygame.sprite.Group()
         self.aliens = []
 
         self._create_alien_fleet()
@@ -73,7 +73,7 @@ class AlienInvasion:
         """Makes new screen and flip to the new screen"""
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
-        for bullet in self.bullets:
+        for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         for alien in self.aliens:
             alien.blitme()
@@ -82,16 +82,16 @@ class AlienInvasion:
     def _fire_bullet(self):
         # Create a bullet and to the bullets list
         if len(self.bullets) < self.settings.numer_of_bullets_allowed:
-            self.bullets.append(Bullet(self))
+            self.bullets.add(Bullet(self))
 
     def _update_bullets(self):
         """Manage bullets: remove old and update remaining bullets"""
-        for bullet in copy.copy(self.bullets):
+        for bullet in self.bullets.copy():
             # Remove bullets from the list which crosses the screen
-            if bullet.rect.y <= 0:
+            if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
-            else: # Update bullets' position
-                bullet.update_position()
+        # Update bullets positions
+        self.bullets.update()
 
     def _update_aliens(self):
         """Check if fleet is at the edge, change direction and
