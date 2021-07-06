@@ -1,10 +1,12 @@
 import pygame
+from pygame.sprite import Sprite
 """Alien to be used in Alien Invasion"""
 
-class Alien():
+class Alien(Sprite):
     """A class to define an alien of the alien fleet"""
     def __init__(self, ai_game):
         """Initialize the alien and set its starting position"""
+        super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         # load the alien image and set its rect attribute
@@ -19,8 +21,8 @@ class Alien():
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
-    def update_horizontal_position(self):
-        """Move the alien to the right"""
+    def update(self):
+        """Move the alien to the right or left depending on the fleet direction"""
         self.x += self.settings.alien_speed * self.settings.fleet_direction
         self.rect.x = self.x
 

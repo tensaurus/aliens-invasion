@@ -21,7 +21,7 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
-        self.aliens = []
+        self.aliens = pygame.sprite.Group()
 
         self._create_alien_fleet()
 
@@ -75,8 +75,7 @@ class AlienInvasion:
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
-        for alien in self.aliens:
-            alien.blitme()
+        self.aliens.draw(self.screen)
         pygame.display.flip()
 
     def _fire_bullet(self):
@@ -100,10 +99,9 @@ class AlienInvasion:
             # Change fleet direction
             self.settings.fleet_direction *= -1
             # Drop fleet by one step
-            for alien in self.aliens:
+            for alien in self.aliens.sprites():
                 alien.update_vertical_position()
-        for alien in self.aliens:
-            alien.update_horizontal_position()
+        self.aliens.update()
 
     def _is_fleet_at_edge(self):
         """Returns true if fleet reaches any edge of the screen"""
@@ -129,7 +127,7 @@ class AlienInvasion:
                 alien.x = alien_width + (2 * alien_width) * alien_number
                 alien.rect.x = alien.x
                 alien.rect.y = alien_height + (2 * alien_height) * row_number
-                self.aliens.append(alien)
+                self.aliens.add(alien)
 
 if __name__ == '__main__':
     ai = AlienInvasion()
