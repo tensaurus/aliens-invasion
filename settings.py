@@ -11,6 +11,7 @@ class Settings:
 
         # Settings for Ship
         self.ship_speed = 0.5
+        self.ship_limit = 3 # Max number of ships given to a player
 
         #settings for bullets
         self.bullet_speed = 0.5
@@ -21,6 +22,6 @@ class Settings:
 
         # Settings for aliens
         self.alien_speed = 0.5
-        self.fleet_drop_speed = 10.0
+        self.fleet_drop_speed = 50.0
         # fleet_direction of 1 for moving right and -1 for left
         self.fleet_direction = 1

@@ -29,3 +29,8 @@ class Ship:
             self.x -= self.settings.ship_speed
         # Update rect object from self.x
         self.rect.x = self.x
+
+    def center_ship(self):
+        """Center the ship on screen"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
