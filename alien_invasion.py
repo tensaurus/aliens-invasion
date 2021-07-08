@@ -53,9 +53,17 @@ class AlienInvasion:
                     self._check_keydown_events(event)
                 elif event.type == pygame.KEYUP:
                     self._check_keyup_events(event)
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = pygame.mouse.get_pos()
+                    self._check_play_button(mouse_pos)
             return True
         else:
             return True
+
+    def _check_play_button(self, mouse_pos):
+        """Start a new game when play button is clicked"""
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.stats.game_is_active = True
 
     def _check_keydown_events(self, event):
         """Handle all keydown events"""
@@ -86,7 +94,7 @@ class AlienInvasion:
         # Draw the play button when game is inactive
         if not self.stats.game_is_active:
             self.play_button.draw_button()
-            
+
         pygame.display.flip()
 
     def _fire_bullet(self):
