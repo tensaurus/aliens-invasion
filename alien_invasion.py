@@ -8,6 +8,7 @@ from ship import Ship
 from bullet import Bullet
 from alien import Alien
 from game_stats import GameStats
+from button import Button
 
 class AlienInvasion:
     """Manage game assets and behavior."""
@@ -25,6 +26,7 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.play_button = Button(self, "Play")
 
         self._create_alien_fleet()
 
@@ -80,11 +82,17 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+
+        # Draw the play button when game is inactive
+        if not self.stats.game_is_active:
+            self.play_button.draw_button()
+            
         pygame.display.flip()
 
     def _fire_bullet(self):
         # Create a bullet and to the bullets list
-        if len(self.bullets) < self.settings.numer_of_bullets_allowed:
+        if (self.stats.game_is_active and 
+            len(self.bullets) < self.settings.numer_of_bullets_allowed):
             self.bullets.add(Bullet(self))
 
     def _update_bullets(self):
