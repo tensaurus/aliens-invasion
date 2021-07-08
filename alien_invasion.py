@@ -16,9 +16,10 @@ class AlienInvasion:
         """Initialize game and create game resources"""
         pygame.init()
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.settings.screen_width = self.screen.get_rect().width
-        self.settings.screen_height = self.screen.get_rect().height
+        self.screen = pygame.display.set_mode((self.settings.screen_width, 
+                                                self.settings.screen_height))
+        # self.settings.screen_width = self.screen.get_rect().width
+        # self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
         self.stats = GameStats(self)
         self.ship = Ship(self)
@@ -32,9 +33,10 @@ class AlienInvasion:
         running = True
         while running:
             running = self._check_events()
-            self.ship.update_position()
-            self._update_bullets()
-            self._update_aliens()
+            if self.stats.game_is_active:
+                self.ship.update_position()
+                self._update_bullets()
+                self._update_aliens()
             self._update_screen()
             
     def _check_events(self):
@@ -145,13 +147,15 @@ class AlienInvasion:
 
     def _ship_hit(self):
         """Responds ship being hit by an alien"""
-        self.stats.ships_left -= 1 # Decrement ships left by one
-        self.aliens.empty()        # Delete existing aliens
-        self.bullets.empty()       # Delete existing bullets
-        self._create_alien_fleet() # Create new aliens fleet
-        self.ship.center_ship()    # Center ship position
-
-        sleep(1.0)                 # Pause
+        if self.stats.ships_left > 0:
+            self.stats.ships_left -= 1 # Decrement ships left by one
+            self.aliens.empty()        # Delete existing aliens
+            self.bullets.empty()       # Delete existing bullets
+            self._create_alien_fleet() # Create new aliens fleet
+            self.ship.center_ship()    # Center ship position
+            sleep(1.0)                 # Pause
+        else:
+            self.stats.game_is_active = False
 
     def _on_aliens_reach_bottom(self):
         """When aliens reach bottom of the screen,
