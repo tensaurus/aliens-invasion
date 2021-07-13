@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pygame
 from pygame.sprite import Sprite
 """Alien to be used in Alien Invasion"""
@@ -10,7 +12,7 @@ class Alien(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         # load the alien image and set its rect attribute
-        self.image = pygame.image.load('images/alien.bmp')
+        self.image = pygame.image.load(Path('images/alien.bmp'))
         self.rect = self.image.get_rect()
         # Set initial position of alien as top left corner
         self.rect.x = self.rect.width

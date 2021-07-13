@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pygame
 
 class Ship:
@@ -6,7 +8,7 @@ class Ship:
         """Initialize the ship and set its starting position"""
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
-        self.image = pygame.image.load('images/ship.bmp')
+        self.image = pygame.image.load(Path('images/ship.bmp'))
         self.rect = self.image.get_rect()
         self.settings = ai_game.settings
         self.rect.midbottom = self.screen_rect.midbottom

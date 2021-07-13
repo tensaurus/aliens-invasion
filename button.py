@@ -4,6 +4,7 @@ class Button:
     """A class to create buttons as pygame don't have any inbuilt class for that"""
     def __init__(self, ai_game, msg):
         """Initialize button attributes"""
+        self.settings = ai_game.settings
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
 
@@ -11,7 +12,7 @@ class Button:
         self.width, self.height = 200, 50
         self.button_color = (0, 255, 0)
         self.text_color = (255, 255, 255)
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.SysFont(self.settings.font, self.settings.font_size)
 
         # Build button's rect object and center it
         self.rect = pygame.Rect(0, 0, self.width, self.height)

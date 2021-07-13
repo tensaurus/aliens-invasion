@@ -1,6 +1,5 @@
 """Module to have scoreboard related code"""
 
-from settings import Settings
 import pygame.font
 
 class Scoreboard:
@@ -14,7 +13,7 @@ class Scoreboard:
 
         # Font setting for scoring information
         self.text_color = (30, 30, 30)
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.SysFont(self.settings.font, self.settings.font_size)
 
         self.prep_score()
 

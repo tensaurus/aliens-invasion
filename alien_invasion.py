@@ -1,3 +1,4 @@
+import os
 import sys
 from time import sleep
 
@@ -10,6 +11,14 @@ from alien import Alien
 from game_stats import GameStats
 from button import Button
 from scoreboard import Scoreboard
+
+# When a bundled app starts up, the bootloader sets the sys.frozen attribute and 
+# stores the absolute path to the bundle folder in sys._MEIPASS. For a one-folder bundle,
+# this is the path to that folder. For a one-file bundle, this is the path to the temporary 
+# folder created by the bootloader
+# https://pyinstaller.readthedocs.io/en/stable/runtime-information.html?highlight=hasattr#run-time-information
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS)
 
 class AlienInvasion:
     """Manage game assets and behavior."""

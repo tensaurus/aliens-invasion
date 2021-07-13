@@ -8,6 +8,8 @@ class Settings:
         self.screen_width = 900
         self.screen_height = 600
         self.bg_color = (230, 230, 230)
+        self.font = 'arial'
+        self.font_size = 48
 
         # Settings for Ship
         self.ship_limit = 3 # Max number of ships given to a player
