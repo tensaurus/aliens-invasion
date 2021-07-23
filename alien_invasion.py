@@ -77,10 +77,11 @@ class AlienInvasion:
                 not self.stats.game_is_active):
             self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
+            self.scoreboard.prep_score()
+            self.scoreboard.prep_level()
             self.stats.game_is_active = True
             self._reset_scene()
-            pygame.mouse.set_visible(False)
-            
+            pygame.mouse.set_visible(False) 
 
     def _check_keydown_events(self, event):
         """Handle all keydown events"""
@@ -135,15 +136,18 @@ class AlienInvasion:
         #  If so, get rid of the bullet and the alien hit
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True)
-        for aliens in collisions.values():
-            self.stats.score += len(aliens) * self.settings.alien_point
-        self.scoreboard.prep_score()
-        self.scoreboard.check_high_score()
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += len(aliens) * self.settings.alien_point
+            self.scoreboard.prep_score()
+            self.scoreboard.check_high_score()
         # Create new fleet if all aliens are dead
         if not self.aliens:
             self.bullets.empty() # Destroy existing bullets
             self._create_alien_fleet()
             self.settings.increase_speed()
+            self.stats.level += 1
+            self.scoreboard.prep_level()
 
     def _update_aliens(self):
         """Check if fleet is at the edge, change direction and

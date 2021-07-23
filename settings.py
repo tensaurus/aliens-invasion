@@ -12,7 +12,7 @@ class Settings:
         self.font_size = 48
 
         # Settings for Ship
-        self.ship_limit = 3 # Max number of ships given to a player
+        self.ship_limit = 1 # Max number of ships given to a player
 
         #settings for bullets
         self.bullet_width = 3
