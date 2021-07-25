@@ -14,7 +14,7 @@ class Bullet(Sprite):
         # Create a bullet rect at (0, 0) and then change position according to ship
         self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
                                 self.settings.bullet_height)
-        self.rect.midtop = ai_game.ship.rect.midtop
+        self.rect.midtop = ai_game.ship_on_frontline.rect.midtop
 
         # Store bullet's y position as decimal
         self.y = float(self.rect.y)

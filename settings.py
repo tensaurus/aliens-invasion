@@ -9,10 +9,10 @@ class Settings:
         self.screen_height = 600
         self.bg_color = (230, 230, 230)
         self.font = 'arial'
-        self.font_size = 48
+        self.font_size = 36
 
         # Settings for Ship
-        self.ship_limit = 1 # Max number of ships given to a player
+        self.ship_limit = 3 # Max number of ships given to a player
 
         #settings for bullets
         self.bullet_width = 3
@@ -33,7 +33,7 @@ class Settings:
         """Initialize settings that change during the game"""
         self.ship_speed = 0.5
         self.bullet_speed = 1.0
-        self.alien_speed = 0.3
+        self.alien_speed = 0.5
         self.alien_point = 10
 
         # fleet_direction of 1 for moving right and -1 for left

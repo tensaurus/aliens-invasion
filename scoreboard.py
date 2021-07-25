@@ -28,7 +28,7 @@ class Scoreboard:
         # Position score at top right of screen
         self.score_rect = self.score_image.get_rect()
         self.score_rect.right = self.screen_rect.right -20
-        self.score_rect.top = 20
+        self.score_rect.top = 10
 
     def prep_high_score(self):
         """Prepare high score image and position it"""
@@ -39,7 +39,7 @@ class Scoreboard:
         # Position score at top middle of the screen
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
-        self.high_score_rect.top = 20
+        self.high_score_rect.top = self.score_rect.top
 
     def prep_level(self):
         """Prepare level number display image and position it"""
